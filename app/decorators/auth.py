@@ -9,7 +9,6 @@ def non_revoked_token_required(func):
     def decorated(*args, **kwargs):
         try:
             jti = get_jwt()["jti"]
-            print(jti)
             # Check if the token is blacklisted (discarded)
             if BlacklistedTokenModel.query.filter_by(jti=jti).first():
                 return error_response('Token has been revoked', 401)
