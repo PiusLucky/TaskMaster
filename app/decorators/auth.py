@@ -1,27 +1,22 @@
-from flask import request, jsonify
-from server import app
+from app.handlers.response import error_response
+from flask import jsonify
 from functools import wraps
-import jwt
+from app.models.backlisted_jwt_token_model import BlacklistedTokenModel
+from flask_jwt_extended import create_access_token, get_jwt_identity, get_jwt
 
-def jwt_required(func):
+def non_revoked_token_required(func):
     @wraps(func)
     def decorated(*args, **kwargs):
-        token = request.headers.get('Authorization')
-
-        if not token:
-            return jsonify({'message': 'Token is missing'}), 401
-
         try:
-            # Decode the token and get the user ID
-            payload = jwt.decode(token, app.config['SECRET_KEY'])
-            user_id = payload['user_id']
-        except jwt.ExpiredSignatureError:
-            return jsonify({'message': 'Token has expired'}), 401
-        except jwt.InvalidTokenError:
-            return jsonify({'message': 'Invalid token'}), 401
+            jti = get_jwt()["jti"]
+            print(jti)
+            # Check if the token is blacklisted (discarded)
+            if BlacklistedTokenModel.query.filter_by(jti=jti).first():
+                return error_response('Token has been revoked', 401)
+            
+        except Exception as e:
+            return error_response(f'Unable to check if token has been revoked {e}', 500)
 
-        # Add the user_id to the kwargs so it's available in the route
-        kwargs['user_id'] = user_id
         return func(*args, **kwargs)
 
     return decorated

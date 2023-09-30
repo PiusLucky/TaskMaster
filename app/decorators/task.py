@@ -1,7 +1,7 @@
 from functools import wraps
 from flask_jwt_extended import get_jwt_identity
 from app.models.task_model import TaskModel
-from app.handlers.index import error_response
+from app.handlers.response import error_response
 
 def owner_permission_required(func):
     @wraps(func)

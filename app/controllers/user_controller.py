@@ -1,10 +1,11 @@
 from flask import request
 from app.validators.user import UserForm, PasswordForm
-from app.handlers.index import success_response, error_response
+from app.handlers.response import success_response, error_response
 from server import bcrypt, db
 from app.models.user_model import UserModel
 from app.models.password_model import PasswordModel
-from flask_jwt_extended import create_access_token, get_jwt_identity
+from app.models.backlisted_jwt_token_model import BlacklistedTokenModel
+from flask_jwt_extended import create_access_token, get_jwt_identity, get_jwt
 
 def createUserController():
     try:
@@ -89,3 +90,13 @@ def getUserController():
 
     except Exception as e:
         return error_response(f"Something went wrong ({str(e)})", 500)
+    
+
+def logoutUserController():
+    # Get the user's identity (user_id) from the JWT token
+    jti = get_jwt()["jti"]
+    # Extra security: The token has been added to a blacklist to prevent its future use
+    blacklisted_token = BlacklistedTokenModel(jti=jti)
+    db.session.add(blacklisted_token)
+    db.session.commit()
+    return success_response({ "action": "User logged out successfully"})

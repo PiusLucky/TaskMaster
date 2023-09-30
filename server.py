@@ -25,7 +25,7 @@ def create_app():
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     csrf.init_app(app)
-    jwt = JWTManager(app)
+    JWTManager(app)
     
     CORS(app, supports_credentials=True)
 
@@ -39,6 +39,9 @@ def create_app():
     app.register_blueprint(task_route.task_route)
 
     return app
+
+
+
 
 if __name__ == '__main__':
     app = create_app()
