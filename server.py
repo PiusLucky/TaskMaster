@@ -6,28 +6,40 @@ from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
+from flask import request, Response
 
 db = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
 csrf = CSRFProtect()
 
+
 def create_app():
     app = Flask(__name__)
+
+    @app.before_request
+    def handle_preflight():
+        if request.method == "OPTIONS":
+            res = Response()
+            res.headers['X-Content-Type-Options'] = '*'
+            return res
+
+    CORS().init_app(app)
     app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:Lucky&Pius&5@localhost:5432/taskTracker"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SECRET_KEY'] = 'ZVuPI/FBIoHi|1$'  # Replace with a strong secret key
+    # Replace with a strong secret key
+    app.config['SECRET_KEY'] = 'ZVuPI/FBIoHi|1$'
     app.config['WTF_CSRF_ENABLED'] = False  # Disable CSRF protection
-    app.config["JWT_SECRET_KEY"] = "EO=E@NLD4-t)c!Y"  # Replace with a strong secret key
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)  # Token expiration time
+    # Replace with a strong secret key
+    app.config["JWT_SECRET_KEY"] = "EO=E@NLD4-t)c!Y"
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(
+        hours=1)  # Token expiration time
 
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     csrf.init_app(app)
     JWTManager(app)
-    
-    CORS(app, supports_credentials=True)
 
     with app.app_context():
         db.create_all()
@@ -39,8 +51,6 @@ def create_app():
     app.register_blueprint(task_route.task_route)
 
     return app
-
-
 
 
 if __name__ == '__main__':

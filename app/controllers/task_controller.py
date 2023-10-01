@@ -43,15 +43,13 @@ def createTaskController():
 
             # Return a success response with the created task data
             return success_response(new_task.as_dict())
-    
+
         else:
             # Form is not valid, return validation errors
             return error_response(taskForm.errors, 400)
     except Exception as e:
         # Handle any exceptions that occur during processing or validation
-         return error_response(f"Something went wrong ({str(e)})", 500)
-    
-
+        return error_response(f"Something went wrong ({str(e)})", 500)
 
 
 def updateTaskController(task_id):
@@ -83,7 +81,7 @@ def updateTaskController(task_id):
             return error_response(taskForm.errors, 400)
     except Exception as e:
         return error_response(f"Something went wrong ({str(e)})", 500)
-    
+
 
 def deleteTaskController(task_id):
     try:
@@ -100,7 +98,6 @@ def deleteTaskController(task_id):
         return success_response(message='Task deleted successfully')
     except Exception as e:
         return error_response(f"Something went wrong ({str(e)})", 500)
-    
 
 
 def getAllTasksController():
@@ -136,13 +133,17 @@ def getAllTasksController():
         if title_filter:
             filter_queries.append(TaskModel.title.ilike(f"%{title_filter}%"))
         if description_filter:
-            filter_queries.append(TaskModel.description.ilike(f"%{description_filter}%"))
+            filter_queries.append(
+                TaskModel.description.ilike(f"%{description_filter}%"))
         if category_filter:
-            filter_queries.append(TaskModel.category.ilike(f"%{category_filter}%"))
+            filter_queries.append(
+                TaskModel.category.ilike(f"%{category_filter}%"))
         if priority_filter:
-            filter_queries.append(TaskModel.priority.ilike(f"%{priority_filter}%"))
+            filter_queries.append(
+                TaskModel.priority.ilike(f"%{priority_filter}%"))
         if dueDate_filter:
-            filter_queries.append(cast(TaskModel.dueDate, db.String).ilike(f"%{dueDate_filter}%"))
+            filter_queries.append(
+                cast(TaskModel.dueDate, db.String).ilike(f"%{dueDate_filter}%"))
 
         if filter_queries:
             tasks_query = tasks_query.filter(or_(*filter_queries))

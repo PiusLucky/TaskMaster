@@ -1,7 +1,7 @@
 
 from flask import jsonify
 
-# Custom success response handler
+
 def success_response(data=None, message="Success", status_code=200):
     result = {
         "meta": {
@@ -10,10 +10,11 @@ def success_response(data=None, message="Success", status_code=200):
         },
         "data": data  # Don't jsonify here
     }
+    response = jsonify(result)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response, status_code  # Return the JSON response
 
-    return jsonify(result), status_code  # Return the JSON response
 
-# Custom error response handler
 def error_response(message="An error occurred", status_code=500):
     result = {
         "meta": {
@@ -22,4 +23,6 @@ def error_response(message="An error occurred", status_code=500):
         }
     }
 
-    return result, status_code
+    response = jsonify(result)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response, status_code

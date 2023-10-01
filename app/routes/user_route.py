@@ -8,9 +8,11 @@ user_route = Blueprint('user_route', __name__)
 
 RESOURCE_NAME = "user"
 
+
 @user_route.route(f'{API_VERSION}/{RESOURCE_NAME}/users', methods=['POST'])
 def create_user():
     return createUserController()
+
 
 @user_route.route(f'{API_VERSION}/{RESOURCE_NAME}/users', methods=['GET'])
 @jwt_required()
@@ -18,9 +20,11 @@ def create_user():
 def get_user():
     return getUserController()
 
+
 @user_route.route(f'{API_VERSION}/{RESOURCE_NAME}/users/login', methods=['POST'])
 def login_user():
     return loginUserController()
+
 
 @user_route.route(f'{API_VERSION}/{RESOURCE_NAME}/users/logout', methods=['POST'])
 @jwt_required()

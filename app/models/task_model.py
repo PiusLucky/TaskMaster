@@ -1,6 +1,7 @@
 from app.models import BaseTable
 from sqlalchemy import Column, String, ForeignKey, Date, Text, UUID
 
+
 class TaskModel(BaseTable):
     __tablename__ = 'taskTable'
 
@@ -9,7 +10,7 @@ class TaskModel(BaseTable):
     description = Column(Text, nullable=False)
     priority = Column(String(255), nullable=False)
     category = Column(String(255), nullable=False)
-    dueDate = Column(Date, nullable=False)  
+    dueDate = Column(Date, nullable=False)
 
     def __init__(self, user_id, title, description, category, priority, dueDate):
         self.user_id = user_id
@@ -17,7 +18,7 @@ class TaskModel(BaseTable):
         self.description = description
         self.category = category
         self.priority = priority
-        self.dueDate = dueDate  
+        self.dueDate = dueDate
 
     def as_dict(self):
         # Convert the object's attributes to a dictionary

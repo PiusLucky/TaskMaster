@@ -1,6 +1,7 @@
 from app.models import BaseTable
 from sqlalchemy import Column, String
 
+
 class UserModel(BaseTable):
     __tablename__ = 'userTable'
 
@@ -9,9 +10,8 @@ class UserModel(BaseTable):
 
     def __init__(self, full_name, email):
         self.full_name = full_name
-        self.email = email 
+        self.email = email
 
-        
     def as_dict(self):
         # Convert the object's attributes to a dictionary
         return {

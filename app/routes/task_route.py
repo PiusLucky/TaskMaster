@@ -17,11 +17,13 @@ RESOURCE_NAME = "task"
 def getTasks():
     return getAllTasksController()
 
+
 @task_route.route(f'{API_VERSION}/{RESOURCE_NAME}/tasks', methods=['POST'])
 @non_revoked_token_required
 @jwt_required()
 def create_task():
     return createTaskController()
+
 
 @task_route.route(f'{API_VERSION}/{RESOURCE_NAME}/tasks/<uuid:task_id>', methods=['PUT'])
 @jwt_required()
@@ -29,6 +31,7 @@ def create_task():
 @owner_permission_required
 def update_task(task_id):
     return updateTaskController(task_id)
+
 
 @task_route.route(f'{API_VERSION}/{RESOURCE_NAME}/tasks/<uuid:task_id>', methods=['DELETE'])
 @jwt_required()
