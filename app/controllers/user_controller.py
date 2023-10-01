@@ -45,7 +45,7 @@ def createUserController():
 
         user_dict = new_user.as_dict()
 
-        return success_response(user_dict)
+        return success_response(data=user_dict, message="Registration completed, kindly login.")
 
     except Exception as e:
         # Handle any exceptions that occur during processing or validation
@@ -64,7 +64,7 @@ def loginUserController():
 
         if user is None:
             return error_response("Invalid credentials", 400)
-        
+
         user_dict = user.as_dict()
         userId = str(user_dict["id"])
         passwordInstance = PasswordModel.query.filter_by(

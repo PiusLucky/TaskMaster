@@ -19,8 +19,8 @@ def getTasks():
 
 
 @task_route.route(f'{API_VERSION}/{RESOURCE_NAME}/tasks', methods=['POST'])
-@non_revoked_token_required
 @jwt_required()
+@non_revoked_token_required
 def create_task():
     return createTaskController()
 

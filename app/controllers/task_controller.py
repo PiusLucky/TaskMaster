@@ -42,7 +42,7 @@ def createTaskController():
             db.session.commit()
 
             # Return a success response with the created task data
-            return success_response(new_task.as_dict())
+            return success_response(data=new_task.as_dict(), message="Task created successfully.")
 
         else:
             # Form is not valid, return validation errors
