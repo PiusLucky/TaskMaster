@@ -116,8 +116,9 @@ def getAllTasksController():
         priority_filter = request.args.get('priority')
         dueDate_filter = request.args.get('dueDate')
 
-        # Query tasks with pagination
-        tasks_query = TaskModel.query.filter_by(user_id=user_id)
+        # Query tasks with pagination, sorted by created timestamp in descending order
+        tasks_query = TaskModel.query.filter_by(
+            user_id=user_id).order_by(TaskModel.created_at.desc())
 
         # Apply search criteria
         if search_query:
