@@ -5,7 +5,8 @@ from app.validators.task import TaskForm
 from app.handlers.response import success_response, error_response
 from flask_jwt_extended import get_jwt_identity
 from sqlalchemy import cast
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
+from datetime import datetime
 
 
 def createTaskController():
@@ -110,8 +111,6 @@ def getAllTasksController():
         search_query = request.args.get('search', '')
 
         # Retrieve filter parameters for each field
-        title_filter = request.args.get('title')
-        description_filter = request.args.get('description')
         category_filter = request.args.get('category')
         priority_filter = request.args.get('priority')
         dueDate_filter = request.args.get('dueDate')
@@ -131,11 +130,6 @@ def getAllTasksController():
 
         # Apply filter criteria for each field
         filter_queries = []
-        if title_filter:
-            filter_queries.append(TaskModel.title.ilike(f"%{title_filter}%"))
-        if description_filter:
-            filter_queries.append(
-                TaskModel.description.ilike(f"%{description_filter}%"))
         if category_filter:
             filter_queries.append(
                 TaskModel.category.ilike(f"%{category_filter}%"))
@@ -143,11 +137,14 @@ def getAllTasksController():
             filter_queries.append(
                 TaskModel.priority.ilike(f"%{priority_filter}%"))
         if dueDate_filter:
-            filter_queries.append(
-                cast(TaskModel.dueDate, db.String).ilike(f"%{dueDate_filter}%"))
+            # Convert the dueDate_filter string to a Python datetime object
+            desired_date = datetime.strptime(dueDate_filter, "%Y-%m-%d")
+            # Filter based on the date part of dueDate
+            filter_queries.append(db.func.date(
+                TaskModel.dueDate) == desired_date)
 
         if filter_queries:
-            tasks_query = tasks_query.filter(or_(*filter_queries))
+            tasks_query = tasks_query.filter(and_(*filter_queries))
 
         total_elements = tasks_query.count()
         total_pages = (total_elements + limit - 1) // limit
