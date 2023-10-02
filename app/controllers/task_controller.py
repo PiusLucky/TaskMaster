@@ -56,7 +56,7 @@ def createTaskController():
 def updateTaskController(task_id):
     try:
         # Query the task to be updated by its ID
-        task = TaskModel.query.get(task_id)
+        task = db.session.get(TaskModel, task_id)
 
         if task is None:
             return error_response('Task not found', 404)
@@ -67,12 +67,16 @@ def updateTaskController(task_id):
         taskForm = TaskForm(data=json_data, obj=task)
 
         if taskForm.validate():
-            # Update the task attributes from the form data
-            task.title = json_data["title"]
-            task.description = json_data["description"]
-            task.category = json_data["category"]
-            task.priority = json_data["priority"]
-            task.dueDate = json_data["dueDate"]
+            if "title" in request.json:
+                task.title = request.json["title"]
+            if "description" in request.json:
+                task.description = request.json["description"]
+            if "category" in request.json:
+                task.category = request.json["category"]
+            if "priority" in request.json:
+                task.priority = request.json["priority"]
+            if "dueDate" in request.json:
+                task.dueDate = request.json["dueDate"]
 
             # Commit the changes to the database
             db.session.commit()
@@ -87,7 +91,7 @@ def updateTaskController(task_id):
 def deleteTaskController(task_id):
     try:
         # Find the task by ID
-        task = TaskModel.query.get(task_id)
+        task = db.session.get(TaskModel, task_id)
 
         if not task:
             return error_response('Task not found', 404)

@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -7,6 +9,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
 from flask import request, Response
+load_dotenv()
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -14,8 +17,18 @@ bcrypt = Bcrypt()
 csrf = CSRFProtect()
 
 
-def create_app():
+def create_app(environment="development"):
     app = Flask(__name__)
+
+    print(environment)
+
+    databaseUri = None
+
+    # Assume we only have two environments
+    if environment == "development":
+        databaseUri = os.getenv("DATABASE_URI")
+    elif environment != "development":
+        databaseUri = "postgresql://postgres:Lucky&Pius&5@localhost:5432/taskTrackerTest"
 
     @app.before_request
     def handle_preflight():
@@ -25,13 +38,18 @@ def create_app():
             return res
 
     CORS().init_app(app)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:Lucky&Pius&5@localhost:5432/taskTracker"
+
+    if environment == "testing":
+        app.config['TESTING'] = True
+        app.config['DEBUG'] = True
+    app.config["SQLALCHEMY_DATABASE_URI"] = databaseUri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # Replace with a strong secret key
-    app.config['SECRET_KEY'] = 'ZVuPI/FBIoHi|1$'
-    app.config['WTF_CSRF_ENABLED'] = False  # Disable CSRF protection
+    app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+    # Disable CSRF protection, since we are going RESTful
+    app.config['WTF_CSRF_ENABLED'] = False
     # Replace with a strong secret key
-    app.config["JWT_SECRET_KEY"] = "EO=E@NLD4-t)c!Y"
+    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(
         hours=1)  # Token expiration time
 
@@ -54,5 +72,5 @@ def create_app():
 
 
 if __name__ == '__main__':
-    app = create_app()
+    app = create_app("development")
     app.run(debug=True)
