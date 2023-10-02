@@ -26,12 +26,18 @@ TaskMaster Backend is the server component of the TaskMaster project, responsibl
 ```
 
 
-Database setup
+➡️ Database setup
 
 ```bash
    flask db init
    flask db migrate
    flask db upgrade
+```
+
+🌐 Run Tests (Both Unit and integration tests)
+
+```bash
+    python -m pytest
 ```
 
 3. Set up your environment variables by creating a `.env` file based on the provided `env.sample` file.
