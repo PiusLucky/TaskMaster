@@ -19,11 +19,17 @@ TaskMaster Backend is the server component of the TaskMaster project, responsibl
     cd taskmaster-backend
 ```
 
-2. Install dependencies:
+2. Setup virtual environment & Install dependencies:
+
+```bash
+  python -m venv .venv
+  .\venv\Scripts\activate
+```
 
 ```bash
    pip install -r requirements.txt
 ```
+
 
 
 ➡️ Database setup
@@ -53,6 +59,10 @@ Make sure to set the following environment variables in your `.env` file:
 - `JWT_SECRET_KEY`: Any strong secret key for JSON Web Tokens (JWT).
 
 4. Run the Flask application
+
+   ```bash
+   flask run
+   ```
 
 The backend should now be running on `http://localhost:5000`.
 
