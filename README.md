@@ -25,11 +25,16 @@ TaskMaster Backend is the server component of the TaskMaster project, responsibl
    pip install -r requirements.txt
 ```
 
+
+Database setup
+
+```bash
+   flask db init
+   flask db migrate
+   flask db upgrade
+```
+
 3. Set up your environment variables by creating a `.env` file based on the provided `env.sample` file.
-
-4. Run the Flask application
-
-The backend should now be running on `http://localhost:5000`.
 
 ## Environment Variables
 
@@ -40,6 +45,12 @@ Make sure to set the following environment variables in your `.env` file:
 - `DATABASE_URI`: Your local or staging PostgreSQL database URI.
 - `SECRET_KEY`: Any strong secret key for application security.
 - `JWT_SECRET_KEY`: Any strong secret key for JSON Web Tokens (JWT).
+
+4. Run the Flask application
+
+The backend should now be running on `http://localhost:5000`.
+
+
 
 ## Features
 
