@@ -9,7 +9,7 @@ fake = Faker()
 os.environ['FLASK_ENV'] = 'testing'
 
 
-class AuthenticationTests(unittest.TestCase):
+class IntegrationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Create a Flask app with testing configuration
