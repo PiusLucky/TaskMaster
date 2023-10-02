@@ -1,4 +1,6 @@
-![TaskMaster Logo](https://github.com/PiusLucky/TaskMaster-FE/raw/main/public/images/logo.png)
+<p align="center">
+  <img src="https://github.com/PiusLucky/TaskMaster-FE/raw/main/public/images/logo.png" alt="TaskMaster Logo" width="200">
+</p>
 
 # TaskMaster Backend
 
