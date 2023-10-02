@@ -46,6 +46,9 @@ TaskMaster Backend is the server component of the TaskMaster project, responsibl
     python -m pytest
 ```
 
+![image](https://github.com/PiusLucky/TaskMaster/assets/32282934/53a34e3a-f779-475e-8aed-97306843da45)
+
+
 3. Set up your environment variables by creating a `.env` file based on the provided `env.sample` file.
 
 ## Environment Variables
