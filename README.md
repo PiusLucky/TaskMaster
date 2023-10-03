@@ -30,7 +30,7 @@ https://documenter.getpostman.com/view/22585263/2s9YJc3PYw
 ```
 
 ```bash
-   pip install -r requirements.txt
+  cd ../.. && pip install -r requirements.txt
 ```
 
 
