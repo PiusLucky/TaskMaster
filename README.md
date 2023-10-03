@@ -49,9 +49,6 @@ https://documenter.getpostman.com/view/22585263/2s9YJc3PYw
     python -m pytest
 ```
 
-![image](https://github.com/PiusLucky/TaskMaster/assets/32282934/53a34e3a-f779-475e-8aed-97306843da45)
-
-
 3. Set up your environment variables by creating a `.env` file based on the provided `env.sample` file.
 
 ## Environment Variables
