@@ -6,7 +6,7 @@
 
 TaskMaster Backend is the server component of the TaskMaster project, responsible for managing tasks, user authentication, and data storage.
 
-## Demo
+## Deployed version
 `Backend Server`: https://taskmaster-yk6i.onrender.com/
 
 
