@@ -6,7 +6,10 @@
 
 TaskMaster Backend is the server component of the TaskMaster project, responsible for managing tasks, user authentication, and data storage.
 
-## Demo
+## Documentation
+https://documenter.getpostman.com/view/22585263/2s9YJc3PYw
+
+## Deployed version
 `Backend Server`: https://taskmaster-yk6i.onrender.com/
 
 
@@ -23,11 +26,11 @@ TaskMaster Backend is the server component of the TaskMaster project, responsibl
 
 ```bash
   python -m venv .venv
-  .\venv\Scripts\activate
+  cd .\venv\Scripts && activate
 ```
 
 ```bash
-   pip install -r requirements.txt
+  cd ../.. && pip install -r requirements.txt
 ```
 
 
