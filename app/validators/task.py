@@ -18,7 +18,7 @@ class TaskForm(FlaskForm):
     dueDate = DateField('Due Date', validators=[
                         DataRequired()], format='%Y-%m-%d')
 
-    def validate_dueDate(form, field):
-        # Custom validation for dueDate
-        if field.data < date.today():
-            raise ValidationError('Due date cannot be in the past')
+    # def validate_dueDate(form, field):
+    #     # Custom validation for dueDate
+    #     if field.data < date.today():
+    #         raise ValidationError('Due date cannot be in the past')
