@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SelectField, DateField
-from wtforms.validators import DataRequired, ValidationError
-from datetime import date
+from wtforms.validators import DataRequired
 
 TASK_PRIORITY_CHOICE = [('high', 'High'), ('medium', 'Medium'), ('low', 'Low')]
 TASK_CATEGORY_CHOICE = [
