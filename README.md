@@ -26,7 +26,7 @@ https://documenter.getpostman.com/view/22585263/2s9YJc3PYw
 
 ```bash
   python -m venv .venv
-  cd .\venv\Scripts && activate
+  cd .venv\Scripts && activate
 ```
 
 ```bash
