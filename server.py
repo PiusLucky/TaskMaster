@@ -29,7 +29,7 @@ def create_app(environment="development"):
         databaseUri = os.getenv("DATABASE_URI")
     elif environment != "development":
         # Fake Test DB URL
-        databaseUri = "postgresql://postgres:Lucky&Pius&5@localhost:5432/taskTrackerTest"
+        databaseUri = "postgresql://postgres:xxxxxxxxx@localhost:5432/taskTrackerTest"
 
     @app.before_request
     def handle_preflight():
