@@ -20,8 +20,6 @@ csrf = CSRFProtect()
 def create_app(environment="development"):
     app = Flask(__name__)
 
-    print(environment)
-
     databaseUri = None
 
     # Assume we only have two environments
@@ -54,24 +52,20 @@ def create_app(environment="development"):
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(
         hours=1)  # Token expiration time
 
-    db.init_app(app)
-    migrate.init_app(app, db)
-    bcrypt.init_app(app)
-    csrf.init_app(app)
-    JWTManager(app)
+    # with app.app_context():
+    #     db.create_all()
 
     with app.app_context():
-        db.create_all()
+        db.init_app(app)
+        migrate.init_app(app, db)
+        bcrypt.init_app(app)
+        csrf.init_app(app)
+        JWTManager(app)
 
-    # Register API routes
-    from app.routes import task_route, health_check_route, user_route
-    app.register_blueprint(health_check_route.health_check_route)
-    app.register_blueprint(user_route.user_route)
-    app.register_blueprint(task_route.task_route)
+        # Register API routes
+        from app.routes import task_route, health_check_route, user_route
+        app.register_blueprint(health_check_route.health_check_route)
+        app.register_blueprint(user_route.user_route)
+        app.register_blueprint(task_route.task_route)
 
-    return app
-
-
-if __name__ == '__main__':
-    app = create_app("development")
-    app.run(debug=True)
+        return app

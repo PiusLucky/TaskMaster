@@ -53,7 +53,7 @@ def createUserController():
         return error_response(f"Something went wrong ({str(e)})", 500)
 
 
-def loginUserController():
+def loginUserController(params = "abc"):
     try:
         json_data = request.get_json()
         email = json_data["email"]
